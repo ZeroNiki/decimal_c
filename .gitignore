@@ -1,0 +1,10 @@
+s21_decimal.a
+*.o
+code/*.o
+code/ar/*.o
+code/cmp/*.o
+code/common/*.o
+code/cvt/*.o
+code/other/*.o
+
+./venv/
