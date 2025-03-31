@@ -45,6 +45,7 @@ clean:
 	rm -rf $(GCOV_LIB) $(GCOV_EXEC)
 	rm -rf gcov-rep lcov-rep
 	rm -f gcov_tests-*
+	rm -f test_output/*.xml
 
 # ------ Libs ------
 $(LIBRARY): $(CODE_OBJ)
