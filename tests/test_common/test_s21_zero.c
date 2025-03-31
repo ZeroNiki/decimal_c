@@ -15,7 +15,6 @@ START_TEST(test_1_zero) {
 }
 END_TEST
 
-
 Suite *create_s21_zero_test(void) {
   Suite *suite = suite_create("s21_decimal_zero");
 
