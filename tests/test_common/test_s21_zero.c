@@ -21,6 +21,7 @@ Suite *create_s21_zero_test(void) {
 
   TCase *tc_core = tcase_create("Core");
   tcase_add_test(tc_core, test_1_zero);
+  suite_add_tcase(suite, tc_core);
 
   return suite;
 }
