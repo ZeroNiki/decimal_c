@@ -8,7 +8,9 @@
 
 // Common func
 Suite *create_s21_zero_test(void);
+
 Suite *create_s21_get_sign(void);
+Suite *create_s21_set_sign(void);
 
 Suite *create_s21_get_scale(void);
 Suite *create_s21_set_scale(void);

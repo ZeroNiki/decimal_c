@@ -9,6 +9,7 @@ int main(void) {
   sr = srunner_create(s);
 
   srunner_add_suite(sr, create_s21_get_sign());
+  srunner_add_suite(sr, create_s21_set_sign());
 
   srunner_add_suite(sr, create_s21_get_scale());
   srunner_add_suite(sr, create_s21_set_scale());
