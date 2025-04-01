@@ -15,4 +15,6 @@ Suite *create_s21_set_sign(void);
 Suite *create_s21_get_scale(void);
 Suite *create_s21_set_scale(void);
 
+Suite *create_s21_negate(void);
+
 #endif // DECIMAL_TEST_H
