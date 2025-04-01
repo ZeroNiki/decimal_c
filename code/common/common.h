@@ -12,7 +12,7 @@ int s21_get_scale(s21_decimal value);
 void s21_set_scale(s21_decimal *value, int scale);
 
 void s21_negate(s21_decimal *value);
-// void s21_normalize(s21_decimal value1, s21_decimal value2);
+void s21_normalize(s21_decimal *value1, s21_decimal *value2);
 
 // int s21_get_bit(s21_decimal value, int index);
 
