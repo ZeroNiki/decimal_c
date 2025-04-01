@@ -15,6 +15,7 @@ int main(void) {
   srunner_add_suite(sr, create_s21_set_scale());
 
   srunner_add_suite(sr, create_s21_negate());
+  srunner_add_suite(sr, create_s21_normalize());
 
   srunner_set_xml(sr, "./test_output/test_results.xml");
   srunner_run_all(sr, CK_VERBOSE);
