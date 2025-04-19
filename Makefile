@@ -26,6 +26,7 @@ define LOADING
 	'
 endef
 
+# ----- Main -----
 AR = ar rcs
 CC = gcc
 CFLAG = -Wall -Wextra -Werror -pedantic -std=c11
@@ -121,14 +122,14 @@ valgrind: $(EXEC)
 # ---- Clang-format -----
 clang-format:
 	$(call PRINT, "Running\ Clang-Format...")
-	@clang-format --style=Google -i $(CODE_SRC) $(TEST_SRC)
+	$(call LOADING, clang-format --style=Google -i $(CODE_SRC) $(TEST_SRC))
 	@clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC)
-	@echo "$(GREEN)✔ Loading complete!$(NC)"
+	@echo "$(GREEN)✔ Clang-format complete!$(NC)"
 
 format-check:
 	$(call PRINT, "Running\ format\ check...")
 	$(call LOADING, @clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC))
-	@echo "$(GREEN)✔ Loading complete!$(NC)"
+	@echo "$(GREEN)✔ Format check complete!$(NC)"
 
 # ---- Cppcheck ------
 cppcheck:
