@@ -91,5 +91,7 @@ cppcheck:
 	mkdir -p $(TEST_OUT)
 	cppcheck --enable=all --inconclusive --std=c11 --language=c $(CODE_SRC) $(TEST_SRC) 2> test_output/cppcheck.log
 
+# ------ Full check -------
+full-check: format-check valgrind cppcheck
 
 .PHONY: all test clean $(LIBRARY) gcov_report gcov_exec
