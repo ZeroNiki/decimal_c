@@ -78,4 +78,18 @@ $(OBJ_DIR)/%.gcov.o: $(CODE_DIR)/%.c
 valgrind: $(EXEC)
 	valgrind --leak-check=full --track-origins=yes --log-file=test_output/memcheck.log ./$(EXEC)
 
+# ---- Clang-format -----
+clang-format:
+	clang-format --style=Google -i $(CODE_SRC) $(TEST_SRC)
+	clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC)
+
+format-check:
+	clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC)
+
+# ---- Cppcheck ------
+cppcheck:
+	mkdir -p $(TEST_OUT)
+	cppcheck --enable=all --inconclusive --std=c11 --language=c $(CODE_SRC) $(TEST_SRC) 2> test_output/cppcheck.log
+
+
 .PHONY: all test clean $(LIBRARY) gcov_report gcov_exec
