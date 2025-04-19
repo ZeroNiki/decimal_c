@@ -69,74 +69,74 @@ gcov_report: gcov_exec
 	$(call LOADING, . venv/bin/activate && pip install gcovr)
 	$(call LOADING, . venv/bin/activate && gcovr --root . $(COVRFLG) --output gcov-rep/report.html && deactivate)
 	@rm -rf ./venv/
-	@echo "$(GREEN)✔ Coverage report generated: gcov-rep/report.html$(NC)"
+	@printf "$(GREEN)✔ Coverage report generated: gcov-rep/report.html$(NC)\n"
 
 clean:
 	$(call ERR, "Deleting\ garbage...")
 	$(call LOADING, rm -rf $(OBJ_DIR) $(LIBRARY) $(EXEC) $(GCOV_LIB) $(GCOV_EXEC))
 	$(call LOADING, rm -rf gcov-rep lcov-rep gcov_tests-* test_output)
-	@echo "$(GREEN)✔ Garbage was deleted!$(NC)"
+	@printf "$(GREEN)✔ Garbage was deleted!$(NC)\n"
 
 # ------ Libs ------
 $(LIBRARY): $(CODE_OBJ)
 	$(call PRINT, "Create\ lib...")
 	$(call LOADING, $(AR) $@ $^)
-	@echo "$(GREEN)✔ Lib $(LIBRARY) built!$(NC)"
+	@printf "$(GREEN)✔ Lib $(LIBRARY) built!$(NC)\n"
 
 $(GCOV_LIB): $(CODE_GCOV_OBJ)
 	$(call PRINT, "Create\ lib\ for\ gcov...")
 	$(call LOADING, $(AR) $@ $^)
-	@echo "$(GREEN)✔ Lib $(GCOV_LIB) built!$(NC)"
+	@printf "$(GREEN)✔ Lib $(GCOV_LIB) built!$(NC)\n"
 
 # ------ Execs ------
 $(EXEC): $(TEST_SRC) $(LIBRARY)
 	$(call PRINT, "Create\ executable\ file...")
 	@mkdir -p $(TEST_OUT)
 	$(call LOADING, $(CC) $(CFLAG) -I. $^ -o $@ $(LIBFLAG))
-	@echo "$(GREEN)✔ $(EXEC) was created!$(NC)"
+	@printf "$(GREEN)✔ $(EXEC) was created!$(NC)\n"
 
 $(GCOV_EXEC): $(TEST_SRC) $(GCOV_LIB)
 	$(call PRINT, "Create\ executable\ file\ for\ gcov...")
 	@mkdir -p $(TEST_OUT)
 	$(call LOADING, $(CC) $(CFLAG) $(GCOV_FLAG) -I. $^ -o $@ $(LIBFLAG))
-	@echo "$(GREEN)✔ $(GCOV_EXEC) was created!$(NC)"
+	@printf "$(GREEN)✔ $(GCOV_EXEC) was created!$(NC)\n"
 
 # ------ Objects ------
 $(OBJ_DIR)/%.o: $(CODE_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(call LOADING, $(CC) $(CFLAG) -c $< -o $@)
-	@echo "$(GREEN)✔ Obj file created: $@$(NC)"
+	@printf "$(GREEN)✔ Obj file created: $@$(NC)\n"
 
 # ------ GCOV Objects ------
 $(OBJ_DIR)/%.gcov.o: $(CODE_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(call LOADING, $(CC) $(CFLAG) $(GCOV_FLAG) -c $< -o $@)
-	@echo "$(GREEN)✔ Obj file created: $@$(NC)"
+	@printf "$(GREEN)✔ Obj file created: $@$(NC)\n"
 
 # ----- Valgrind ------
 valgrind: $(EXEC)
 	$(call PRINT, "Running\ Valgrind\ memory\ check...")
 	$(call LOADING, valgrind --leak-check=full --track-origins=yes --log-file=$(TEST_OUT)/memcheck.log ./$(EXEC))
-	@echo "$(GREEN)✔ Valgrind check complete. Log: $(TEST_OUT)/memcheck.log $(NC)"
+	@printf "$(GREEN)✔ Valgrind check complete. Log: $(TEST_OUT)/memcheck.log $(NC)\n"
 
 # ---- Clang-format -----
 clang-format:
 	$(call PRINT, "Running\ Clang-Format...")
 	$(call LOADING, clang-format --style=Google -i $(CODE_SRC) $(TEST_SRC))
 	@clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC)
-	@echo "$(GREEN)✔ Clang-format complete!$(NC)"
+	@printf "$(GREEN)✔ Clang-format complete!$(NC)\n"
 
 format-check:
 	$(call PRINT, "Running\ format\ check...")
 	$(call LOADING, @clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC))
-	@echo "$(GREEN)✔ Format check complete!$(NC)"
+	@printf "$(GREEN)✔ Format check complete!$(NC)\n"
 
 # ---- Cppcheck ------
 cppcheck:
 	$(call PRINT, "Running\ format\ check...")
 	@mkdir -p $(TEST_OUT)
 	$(call LOADING, cppcheck --enable=all --inconclusive --std=c11 --language=c $(CODE_SRC) $(TEST_SRC) 2> $(TEST_OUT)/cppcheck.log)
-	@echo "$(GREEN)✔ Cppcheck complete. Log: $(TEST_OUT)/cppcheck.log$(NC)"
+	@printf "$(GREEN)✔ Cppcheck complete. Log: $(TEST_OUT)/cppcheck.log$(NC)\n"
 
 # ------ Full check -------
 full-check: format-check valgrind cppcheck
