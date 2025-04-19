@@ -8,6 +8,7 @@ COVRFLG = --html --html-details --exclude-lines-by-pattern '.*assert.*' --exclud
 CODE_DIR = ./code
 TEST_DIR = ./tests
 OBJ_DIR = ./object
+TEST_OUT = ./test_output
 
 CODE_SRC = $(shell find ./code -name '*.c')
 CODE_OBJ = $(patsubst $(CODE_DIR)/%.c, $(OBJ_DIR)/%.o, $(CODE_SRC))
@@ -25,10 +26,10 @@ GCOV_EXEC = gcov_tests
 all: $(LIBRARY)
 
 test: $(EXEC)
-	@./$(EXEC)
+	./$(EXEC)
 
 gcov_exec: clean $(GCOV_EXEC)
-	@./$(GCOV_EXEC)
+	./$(GCOV_EXEC)
 
 gcov_report: gcov_exec
 	mkdir gcov-rep
@@ -45,7 +46,7 @@ clean:
 	rm -rf $(GCOV_LIB) $(GCOV_EXEC)
 	rm -rf gcov-rep lcov-rep
 	rm -f gcov_tests-*
-	rm -f test_output/*.xml
+	rm -rf test_output
 
 # ------ Libs ------
 $(LIBRARY): $(CODE_OBJ)
@@ -56,19 +57,25 @@ $(GCOV_LIB): $(CODE_GCOV_OBJ)
 
 # ------ Execs ------
 $(EXEC): $(TEST_SRC) $(LIBRARY)
+	mkdir -p $(TEST_OUT)
 	$(CC) $(CFLAG) -I. $^ -o $@ $(LIBFLAG)
 
 $(GCOV_EXEC): $(TEST_SRC) $(GCOV_LIB)
+	mkdir -p $(TEST_OUT)
 	$(CC) $(CFLAG) $(GCOV_FLAG) -I. $^ -o $@ $(LIBFLAG)
 
 # ------ Objects ------
 $(OBJ_DIR)/%.o: $(CODE_DIR)/%.c
-	@mkdir -p $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAG) -c $< -o $@
 
 # ------ GCOV Objects ------
 $(OBJ_DIR)/%.gcov.o: $(CODE_DIR)/%.c
-	@mkdir -p $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAG) $(GCOV_FLAG) -c $< -o $@
+
+# ----- Valgrind ------
+valgrind: $(EXEC)
+	valgrind --leak-check=full --track-origins=yes --log-file=test_output/memcheck.log ./$(EXEC)
 
 .PHONY: all test clean $(LIBRARY) gcov_report gcov_exec
