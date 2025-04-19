@@ -32,7 +32,6 @@ START_TEST(test_scale_edge) {
 }
 END_TEST
 
-
 Suite *create_s21_set_scale(void) {
   Suite *suite = suite_create("s21_decimal_set_scale");
 

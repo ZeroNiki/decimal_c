@@ -30,7 +30,6 @@ START_TEST(set_sign_change) {
 }
 END_TEST
 
-
 Suite *create_s21_set_sign(void) {
   Suite *suite = suite_create("s21_decimal_set_scale");
 

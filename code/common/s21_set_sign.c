@@ -13,8 +13,8 @@
 
 void s21_set_sign(s21_decimal *value, int sign) {
   if (sign) {
-    value->bits[3] |= 0x80000000; // -
+    value->bits[3] |= 0x80000000;  // -
   } else {
-    value->bits[3] &= 0x7FFFFFFF; // +
+    value->bits[3] &= 0x7FFFFFFF;  // +
   }
 }

@@ -4,6 +4,4 @@
 // 00000000 00000001 00000000 00000000 = 0x00001000
 // 10000000 00000001 00000000 00000000 = 0x80001000
 
-void s21_negate(s21_decimal *value) {
-  value->bits[3] ^= 0x80000000;
-}
+void s21_negate(s21_decimal *value) { value->bits[3] ^= 0x80000000; }
