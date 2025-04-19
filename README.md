@@ -1,4 +1,30 @@
 # Decimal
+## Usage
+```sh
+make
+```
+- Static lib
+
+```sh
+make full-check
+```
+- Clang, cppcheck, valgrind
+
+```sh
+make test
+```
+- Test func
+
+```sh
+make gcov_report
+```
+- Gcov report
+
+```sh
+make clean
+```
+- Clean
+
 ## База
 - Как хранить десятичное число в uint32_t bits[4]
 - Как представлять знак и scale.
