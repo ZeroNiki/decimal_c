@@ -5,7 +5,7 @@ RED=\033[0;31m
 YELLOW=\033[0;33m
 NC=\033[0m
 
-# Logger
+# Logger. I'ts just function but in Makefile
 define PRINT
 	@printf "$(BLUE)==>$(NC) $(YELLOW)%s$(NC)\n" "$(1)"
 endef
