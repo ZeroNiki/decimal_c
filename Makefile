@@ -123,12 +123,12 @@ valgrind: $(EXEC)
 clang-format:
 	$(call PRINT, "Running\ Clang-Format...")
 	$(call LOADING, clang-format --style=Google -i $(CODE_SRC) $(TEST_SRC))
-	@clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC)
+	@clang-format -n --Werror --verbose --style=Google $(CODE_SRC) $(TEST_SRC)
 	@printf "$(GREEN)✔ Clang-format complete!$(NC)\n"
 
 format-check:
 	$(call PRINT, "Running\ format\ check...")
-	$(call LOADING, @clang-format --style=Google -n $(CODE_SRC) $(TEST_SRC))
+	@clang-format -n --Werror --verbose --style=Google $(CODE_SRC) $(TEST_SRC)
 	@printf "$(GREEN)✔ Format check complete!$(NC)\n"
 
 # ---- Cppcheck ------
